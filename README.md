@@ -4,32 +4,30 @@
 
 # jWATCH
 
-`jWATCH` is a CLI tool for benchmarking LLM inference on NVIDIA Jetson and correlating model performance with hardware telemetry.
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
+[![Platform: Jetson](https://img.shields.io/badge/platform-NVIDIA%20Jetson-76B900.svg)](https://developer.nvidia.com/embedded/jetson)
+[![jetson-ai-lab.io up](https://img.shields.io/badge/jetson--ai--lab.io-up-44cc11?style=flat-square)](https://jetson-ai-lab.io)
 
-It runs inference through Ollama and samples device metrics (from `tegrastats`) in parallel, then reports throughput, latency, and thermal context for each run.
+jWATCH is a command-line benchmarking tool for NVIDIA Jetson.
 
-## Why this project exists
+It runs LLM inference through Ollama and samples hardware metrics in parallel, so you can inspect throughput/latency together with thermal and power behavior.
 
-When you benchmark on edge hardware, raw tokens/sec is not enough. Performance drift is often caused by thermal state, power limits, or memory pressure. jWATCH captures both sides (inference + hardware) so you can compare models under realistic conditions.
+## What it does
 
-## Current capabilities
+- Benchmarks single models (`bench`)
+- Compares multiple models (`compare`)
+- Streams live hardware metrics (`monitor`)
+- Saves benchmark history to SQLite (`history`)
+- Compares two historical runs (`diff`)
+- Exports runs to JSON (`export`)
+- Supports `--mock` mode for development on non-Jetson machines
 
-- Single-model benchmarking (`bench`)
-- Multi-model comparison (`compare`)
-- Live hardware monitor (`monitor`)
-- Environment checks (`check`)
-- Local run history in SQLite (`history`)
-- Run-to-run diff (`diff`)
-- JSON export (`export`)
-- Mock mode for non-Jetson development
+## Why this exists
 
-## Requirements
-
-- Python 3.9+
-- Ollama (for real inference)
-- NVIDIA Jetson + `tegrastats` (for real hardware telemetry)
-
-For Mac/Linux development without Jetson, use `--mock`.
+On edge devices, raw tokens/sec can be misleading.
+A model can look slower simply because the board is hotter, power-limited, or memory-constrained.
+jWATCH captures inference and hardware state together so comparisons are easier to trust.
 
 ## Installation
 
@@ -38,7 +36,7 @@ python3 -m pip install -U pip
 python3 -m pip install .
 ```
 
-If you want test/dev tools:
+For development:
 
 ```bash
 python3 -m pip install pytest pytest-asyncio pytest-cov black mypy
@@ -46,13 +44,13 @@ python3 -m pip install pytest pytest-asyncio pytest-cov black mypy
 
 ## Quick start
 
-### 1. Check setup
+### 1. Validate environment
 
 ```bash
 python3 -m edgewatch check
 ```
 
-### 2. Dummy run (works on Mac with mock telemetry)
+### 2. Run a quick mock benchmark (works on Mac/Linux)
 
 ```bash
 python3 -m edgewatch bench \
@@ -62,7 +60,7 @@ python3 -m edgewatch bench \
   --mock
 ```
 
-### 3. Compare models
+### 3. Compare two models
 
 ```bash
 python3 -m edgewatch compare \
@@ -73,7 +71,7 @@ python3 -m edgewatch compare \
   --mock
 ```
 
-### 4. History / diff / export
+### 4. Query stored runs
 
 ```bash
 python3 -m edgewatch history --last 10
@@ -81,23 +79,23 @@ python3 -m edgewatch diff <run_id_a> <run_id_b>
 python3 -m edgewatch export --output report.json --last 10
 ```
 
-## Real Jetson run
+## Running on Jetson vs non-Jetson
 
-On Jetson (with Ollama and `tegrastats` available), remove `--mock`:
+- **Jetson**: run without `--mock` to use real `tegrastats` sampling
+- **Mac/Linux (non-Jetson)**: use `--mock` for telemetry
+- **Ollama**: optional in mock mode, required for real inference runs
 
-```bash
-python3 -m edgewatch bench --model qwen:4b --prompt "Explain gravity" --runs 5
+## CLI commands
+
+```text
+bench    Benchmark a single model
+compare  Compare multiple models
+monitor  Monitor hardware metrics
+check    Check Ollama + tegrastats availability
+history  Show saved benchmark runs
+diff     Compare two run IDs
+export   Export runs to JSON
 ```
-
-## Output
-
-jWATCH reports:
-
-- tokens/sec (wall-time based)
-- TTFT (time to first token)
-- correlated thermal/power/memory metrics
-- summary table for comparison runs
-- persistent run records (SQLite)
 
 ## Project layout
 
@@ -109,16 +107,22 @@ edgewatch/
   report/
   storage/
   tegrastats/
+  utils/
   edgewatch/cli.py
 tests/
+assets/
 ```
 
-## Notes
+## Roadmap
 
-- `tegrastats` is Jetson-only.
-- On non-Jetson machines, use `--mock` for telemetry.
-- If `python3 -m edgewatch` fails due to missing dependencies, install with `pip install .` and retry.
+- Better throttle event classification and reporting
+- Stronger statistical summaries for long benchmark sessions
+- Packaging cleanup for straightforward `pip install -e .`
+
+## Contributing
+
+Issues and PRs are welcome. If you plan to add a feature, open an issue first so we can align on scope.
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).
