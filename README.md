@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="jWATCH logo" width="560" />
+  <img src="https://raw.githubusercontent.com/ProPrak01/jwatch/main/assets/logo.png" alt="jWATCH logo" width="560" />
 </p>
 
 # jWATCH
@@ -7,7 +7,6 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![Platform: Jetson](https://img.shields.io/badge/platform-NVIDIA%20Jetson-76B900.svg)](https://developer.nvidia.com/embedded/jetson)
-[![jetson-ai-lab.io up](https://img.shields.io/badge/jetson--ai--lab.io-up-44cc11?style=flat-square)](https://jetson-ai-lab.io)
 
 jWATCH is a command-line benchmarking tool for NVIDIA Jetson.
 

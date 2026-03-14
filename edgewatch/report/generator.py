@@ -92,5 +92,5 @@ class ReportGenerator:
             generated_at=datetime.now(),
             total_runs=sum(1 for _ in reports),
             export_format="text",
-            tool_version="0.1.0",
+            tool_version="0.1.1",
         )

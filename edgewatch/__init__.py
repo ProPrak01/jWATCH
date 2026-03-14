@@ -6,7 +6,7 @@ simultaneously querying models via the Ollama API and sampling hardware metrics
 via tegrastats, correlating inference performance with real-time hardware state.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Your Name"
 __email__ = "your.email@example.com"
 
