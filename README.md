@@ -5,6 +5,7 @@
 # jWATCH
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/jwatch.svg)](https://pypi.org/project/jwatch/)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![Platform: Jetson](https://img.shields.io/badge/platform-NVIDIA%20Jetson-76B900.svg)](https://developer.nvidia.com/embedded/jetson)
 
