@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Jetson Workload Analysis & Thermal Hardware Correlation - CLI-based LLM benchmarking and hardware profiler for NVIDIA Jetson"
 readme = "README.md"
 requires-python = ">=3.9"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "ProPrak01", email = "proprak01@users.noreply.github.com"}
 ]
@@ -16,7 +16,6 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX :: Linux",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -58,6 +57,14 @@ jwatch = "edgewatch.edgewatch.cli:app"
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["edgewatch*"]
+exclude = ["tests*", "assets*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
